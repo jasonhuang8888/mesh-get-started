@@ -15,6 +15,13 @@
 #include "mdf_common.h"
 #include "mwifi.h"
 
+// #define MESH_ROOT 1
+// #define MESH_NODE 2
+// #define CONFIG_DEVICE_TYPE 2
+// #define CONFIG_MESH_ID "123456"
+// #define CONFIG_MESH_CHANNEL 13
+
+
 // #define MEMORY_DEBUG
 
 static const char *TAG = "get_started";
@@ -204,12 +211,23 @@ static mdf_err_t event_loop_cb(mdf_event_loop_t event, void *ctx)
     return MDF_OK;
 }
 
+void loop(){
+for(;;){
+
+
+    // mwifi_print_config();
+
+    vTaskDelay(5000 / portTICK_RATE_MS);    
+}
+}
+
 void app_main()
 {
     mwifi_init_config_t cfg = MWIFI_INIT_CONFIG_DEFAULT();
     mwifi_config_t config   = {
         .channel   = CONFIG_MESH_CHANNEL,
-        .mesh_id   = CONFIG_MESH_ID,
+        .mesh_id   = "123456",      //CONFIG_MESH_ID,
+        .mesh_password = "",
         .mesh_type = CONFIG_DEVICE_TYPE,
     };
 
@@ -244,4 +262,5 @@ void app_main()
     TimerHandle_t timer = xTimerCreate("print_system_info", 10000 / portTICK_RATE_MS,
                                        true, NULL, print_system_info_timercb);
     xTimerStart(timer, 0);
+    loop();
 }
